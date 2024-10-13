@@ -5,7 +5,8 @@
 <title>Parse Code</title>
 <meta content='width=device-width, initial-scale=1' name='viewport'>
 <link href='https://fonts.googleapis.com/css?family=Roboto:100,200,300,400italic,400,500,500italic,700,700italic,900' rel='stylesheet' type='text/css'/>
-<style>
+<script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  <style amp-custom>
 body {
   background-color:white;
   margin:0;
@@ -43,227 +44,64 @@ button{cursor:pointer}
 </head>
 <body>
 
-<div id='parser'>
-<textarea id='codes' placeholder='Tulis/paste kode atau teks di sini lalu klik tombol yang sesuai. Untuk embed komentar, ambil ID DISQUS dari URL tombol share komentar Disqus.' spellcheck='false'></textarea>
-<span class='button-group'>
-<button class='btn btn-primary btn-xs' id='cvrt3' onclick='strongConvert();this.disabled = true;'>strong</button>
-<button class='btn btn-primary btn-xs' id='cvrt4' onclick='emConvert();this.disabled = true;'>em</button>
-<button class='btn btn-primary btn-xs' id='cvrt4' onclick='uConvert();this.disabled = true;'>u</button>
-<button class='btn btn-primary btn-xs' id='cvrt5' onclick='strikeConvert();this.disabled = true;'>strike</button>
-<button class='btn btn-primary btn-xs' id='cvrt7' onclick='preConvert();this.disabled = true;'>pre</button>
-<button class='btn btn-primary btn-xs' id='cvrt8' onclick='codeConvert();this.disabled = true;'>code</button>
-<button class='btn btn-primary btn-xs' id='cvrt9' onclick='precodeConvert();this.disabled = true;'>pre code</button>
-<button class='btn btn-primary btn-xs' id='cvrt10' onclick='spoilerConvert();this.disabled = true;'>spoiler</button><br/>
-<button class='btn btn-primary btn-xs' id='cvrt11' onclick='embedConvert();this.disabled = true;'>embed</button> <span>How to get ID DISQUS - <a href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNhKNL4L4j_aiHx-PCvK8Axd27OPz20NTA3u_cjDKoBRDcm052P8KAiSytDSoKwp6d4r7F_MqJp-iDgOGgbWyIrqzIwCky8aiIgeHHkz8YLq9LLgcw_1qsPdMxjTG-rTParn6b8JAe5c0x/s1600/Animation2.gif' rel='nofollow' target='_blank' title='Lihat di sini'>http://disq.us/p/[ID DISQUS]</a></span><br/>
-<button class='btn btn-danger btn-xs' onclick='cdClear();'>Bersihkan</button>
-</span>
-<span class='checkbox'>
-  <input checked='' id='opt1' type='checkbox'/>
-  <input checked='' id='opt2' type='checkbox'/>
-  <input checked='' id='opt3' type='checkbox'/>
-  <input checked='' id='opt4' type='checkbox'/>
-  <input checked='' id='opt5' type='checkbox'/><br/>
-  <input checked='' id='opt6' type='checkbox'/> <span>strong</span>
-  <input checked='' id='opt7' type='checkbox'/> <span>em</span>
-  <input checked='' id='opt8' type='checkbox'/> <span>u</span>
-  <input checked='' id='opt9' type='checkbox'/> <span>strike</span><br/>
-  <input checked='' id='opt10' type='checkbox'/> <span>pre</span>
-  <input checked='' id='opt11' type='checkbox'/> <span>code</span>
-  <input checked='' id='opt12' type='checkbox'/> <span>pre code</span>
-  <input checked='' id='opt13' type='checkbox'/> <span>spoiler</span><br/>
-  <input checked='' id='opt20' type='checkbox'/> <span>embed</span>
-  </span>
-  <div class="clear"></div>
-</div>
+<div id="disqus_thread"></div>
 <script>
-function cdClear() {
-  var wtarea = document.getElementById('codes');
-  wtarea.value = '';
-  wtarea.focus();
-  var clears = document.querySelectorAll('#cvrt3, #cvrt4, #cvrt5, #cvrt6, #cvrt7, #cvrt8, #cvrt9, #cvrt10, #cvrt11')
-  for (var i = 0; i < clears.length; i++)
-{
-  clears[i].disabled = false
-}
-}
-function cdClear2() {
-  var wtarea = document.getElementById('codes2');
-  wtarea.value = '';
-  wtarea.focus();
-  var clears = document.querySelectorAll('#cvrt, #cvrt2')
-  for (var i = 0; i < clears.length; i++)
-{
-  clears[i].disabled = false
-}
-}
-
-function preConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt1 = document.getElementById('opt1'),
-    opt2 = document.getElementById('opt2'),
-    opt3 = document.getElementById('opt3'),
-    opt4 = document.getElementById('opt4'),
-    opt5 = document.getElementById('opt5'),
-    opt10 = document.getElementById('opt10');
-  cv = cv.replace(/\t/g, "    ");
- if (opt10.checked) { if (opt1.checked) cv = cv.replace(/&/g, "&amp;");
-  if (opt2.checked) cv = cv.replace(/'/g, "&#039;");
-  if (opt3.checked) cv = cv.replace(/"/g, "&quot;");
-  if (opt4.checked) cv = cv.replace(/</g, "&lt;");
-  if (opt5.checked) cv = cv.replace(/>/g, "&gt;");
-  cv = cv.replace(/^/, "<pre>");
-      cv = cv.replace(/$/, "</pre>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function codeConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt1 = document.getElementById('opt1'),
-    opt2 = document.getElementById('opt2'),
-    opt3 = document.getElementById('opt3'),
-    opt4 = document.getElementById('opt4'),
-    opt5 = document.getElementById('opt5'),
-    opt11 = document.getElementById('opt11');
-  cv = cv.replace(/\t/g, "    ");
-  if (opt11.checked) { if (opt1.checked) cv = cv.replace(/&/g, "&amp;");
-  if (opt2.checked) cv = cv.replace(/'/g, "&#039;");
-  if (opt3.checked) cv = cv.replace(/"/g, "&quot;");
-  if (opt4.checked) cv = cv.replace(/</g, "&lt;");
-  if (opt5.checked) cv = cv.replace(/>/g, "&gt;");
-  cv = cv.replace(/^/, "<code>");
-      cv = cv.replace(/$/, "</code>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function precodeConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt1 = document.getElementById('opt1'),
-    opt2 = document.getElementById('opt2'),
-    opt3 = document.getElementById('opt3'),
-    opt4 = document.getElementById('opt4'),
-    opt5 = document.getElementById('opt5'),
-    opt12 = document.getElementById('opt12');
-  cv = cv.replace(/\t/g, "    ");
-  if (opt12.checked) { if (opt1.checked) cv = cv.replace(/&/g, "&amp;");
-  if (opt2.checked) cv = cv.replace(/'/g, "&#039;");
-  if (opt3.checked) cv = cv.replace(/"/g, "&quot;");
-  if (opt4.checked) cv = cv.replace(/</g, "&lt;");
-  if (opt5.checked) cv = cv.replace(/>/g, "&gt;");
-  cv = cv.replace(/^/, "<pre><code>");
-      cv = cv.replace(/$/, "</code></pre>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function spoilerConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt13 = document.getElementById('opt13')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt13.checked) {cv = cv.replace(/^/, "<spoiler>");
-      cv = cv.replace(/$/, "</spoiler>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function strongConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt6 = document.getElementById('opt6')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt6.checked) {cv = cv.replace(/^/, "<strong>");
-      cv = cv.replace(/$/, "</strong>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function emConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt7 = document.getElementById('opt7')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt7.checked) {cv = cv.replace(/^/, "<em>");
-      cv = cv.replace(/$/, "</em>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-
-function uConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt8 = document.getElementById('opt8')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt8.checked) {cv = cv.replace(/^/, "<u>");
-      cv = cv.replace(/$/, "</u>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function strikeConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt9 = document.getElementById('opt9')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt9.checked) {cv = cv.replace(/^/, "<strike>");
-      cv = cv.replace(/$/, "</strike>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-function embedConvert() {
-var ctarea = document.getElementById('codes'),
-    cv = ctarea.value,
-    opt20 = document.getElementById('opt20')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt20.checked){ cv = cv.replace(/^/, "<iframe src=\"https://embed.disqus.com/p/");
-      cv = cv.replace(/$/, "\" style=\"border:0;width:100%;height:300px;\" seamless=\"seamless\" scrolling=\"no\" allowtransparency=\"true\"><\/iframe>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
-
-function cdConvert() {
-  var ctarea = document.getElementById('codes2'),
-    cv = ctarea.value,
-    opt14 = document.getElementById('opt14'),
-    opt15 = document.getElementById('opt15'),
-    opt16 = document.getElementById('opt16'),
-    opt17 = document.getElementById('opt17'),
-    opt18 = document.getElementById('opt18')
-  cv = cv.replace(/\t/g, "    ");
-  if (opt14.checked) cv = cv.replace(/&/g, "&amp;");
-  if (opt15.checked) cv = cv.replace(/'/g, "&#039;");
-  if (opt16.checked) cv = cv.replace(/"/g, "&quot;");
-  if (opt17.checked) cv = cv.replace(/</g, "&lt;");
-  if (opt18.checked) cv = cv.replace(/>/g, "&gt;");
-  if (cv.lastIndexOf('\n') != -1 || cv.length > 40) {
-    cv = cv.replace(/^/, "<i rel=\"pre\">");
-  } else {
-    cv = cv.replace(/^/, "<i rel=\"code\">");
-  };
-  cv = cv.replace(/$/, "</i>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();
-};
-function imgConvert() {
-var ctarea = document.getElementById('codes2'),
-    cv = ctarea.value,
-    opt19 = document.getElementById('opt19')
-  cv = cv.replace(/\t/g, "    ");
-    if (opt19.checked){ cv = cv.replace(/^/, "<i rel=\"image\">");
-      cv = cv.replace(/$/, "</i>");
-  ctarea.value = cv;
-  ctarea.focus();
-  ctarea.select();}
-};
+    window.addEventListener('message', receiveMessage, false);
+    function receiveMessage(event) {
+        if (event.data) {
+            var msg;
+            try {
+                msg = JSON.parse(event.data);
+            } catch (err) {
+                // Do nothing
+            }
+            if (!msg) {
+                return false;
+            }
+            if (msg.name === 'resize' || msg.name === 'rendered') {
+                window.parent.postMessage({
+                sentinel: 'amp',
+                type: 'embed-size',
+                height: msg.data.height
+                }, '*');
+            }
+        }
+    }
 </script>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+    */
+    var disqus_config = function () {
+        this.page.url = window.location;
+        this.page.identifier = window.location.hash;
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
 
+        s.src = '//ogreget.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<amp-iframe
+    width=600 height=140
+    src="https://ogreget.blogspot.com/"
+    layout="responsive"
+    sandbox="allow-scripts allow-same-origin allow-modals allow-popups allow-forms"
+    resizable
+>
+    <div
+        aria-label="Load more"
+        role=button
+        tabindex=0
+        overflow
+        style="display:block;font-size:12px;font-weight:500;font-family:Helvetica Neue, arial, sans-serif;text-align:center;line-height:1.1;padding:12px 16px;border-radius:4px;background:rgba(29,47,58,0.6);color:rgb(255,255,255)"
+    >
+        Load more
+    </div>
+</amp-iframe>
 </body>
 </html>
